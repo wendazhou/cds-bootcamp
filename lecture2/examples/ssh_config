@@ -27,6 +27,8 @@ Host burstinstance
   Hostname b-3-1
   ForwardAgent yes
   ProxyJump greeneburst
+  UserKnownHostsFile=/dev/null
+  StrictHostKeyChecking=no
 
 Host burstinstancecontainer
   User wz2247
@@ -34,5 +36,5 @@ Host burstinstancecontainer
   Port 12345
   ForwardAgent yes
   ProxyJump burstinstance
-
-
+  UserKnownHostsFile=/dev/null
+  StrictHostKeyChecking=no
