@@ -28,6 +28,9 @@ echo "Could not find sshd executable)"
 exit 1
 fi
 
+# Propagate environment variables to new shells
+env > ~/.ssh/environment
+
 # Start new ssh daemon binding to user port. We specify the config file as /dev/null
 # to prevent sshd from reading the default config file (which requires root)
 echo "Starting SSH daemon"
