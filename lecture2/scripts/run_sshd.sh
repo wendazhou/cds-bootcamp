@@ -28,9 +28,7 @@ echo "Could not find sshd executable)"
 exit 1
 fi
 
-export -p > ~/environment.sh
-
 # Start new ssh daemon binding to user port. We specify the config file as /dev/null
 # to prevent sshd from reading the default config file (which requires root)
 echo "Starting SSH daemon"
-$SSHD_PATH -f /dev/null -p $SSHD_PORT -h $SSH_KEY_DIR/ssh_host_rsa_key -h $SSH_KEY_DIR/ssh_host_ecdsa_key
+$SSHD_PATH -f /dev/null -p $SSHD_PORT -h $SSH_KEY_DIR/ssh_host_rsa_key -h $SSH_KEY_DIR/ssh_host_ecdsa_key -o PermitUserEnvironment=yes

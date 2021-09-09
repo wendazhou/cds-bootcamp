@@ -37,6 +37,7 @@ fi
 
 
 singularity exec --no-home -B $HOME/.ssh -B /scratch -B $PWD --nv \
+    --cleanenv \
     --overlay overlay-temp.ext3 \
     --overlay overlay-base.ext3:ro \
     --overlay overlay-packages.ext3:ro \
