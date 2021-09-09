@@ -1,0 +1,38 @@
+# This file is intended to be an example for you .ssh/config file
+# You will need to adjust the username to be your netid
+
+Host nyugateway
+  User wz2247
+  Hostname gw.hpc.nyu.edu
+  ForwardAgent yes
+  ControlPath ~/.ssh/.%r@%h:%p
+  ControlMaster auto
+  ControlPersist yes
+
+Host greene
+  User wz2247
+  Hostname greene.hpc.nyu.edu
+  ForwardAgent yes
+  ProxyJump nyugateway
+
+Host greeneburst
+  User wz2247
+  Hostname burst
+  ForwardAgent yes
+  ProxyJump greene
+
+Host burstinstance
+  User wz2247
+# Change as needed
+  Hostname b-3-1
+  ForwardAgent yes
+  ProxyJump greeneburst
+
+Host burstinstancecontainer
+  User wz2247
+  Hostname localhost
+  Port 12345
+  ForwardAgent yes
+  ProxyJump burstinstance
+
+

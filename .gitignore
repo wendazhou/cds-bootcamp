@@ -1,0 +1,6 @@
+*.egg-info
+__pycache__
+outputs/
+*.ext3
+*.ext3.gz
+*.nfs*
