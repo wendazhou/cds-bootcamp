@@ -15,9 +15,13 @@ def main(config: model.PlacesTrainingConfig):
     trainer_kwargs = { **config.lightning }
 
     if config.optim.grad_clip_norm is not None:
-        trainer_kwargs['grad_clip_norm'] = config.optim.grad_clip_norm
+        trainer_kwargs['gradient_clip_val'] = config.optim.grad_clip_norm
 
     trainer_kwargs['gpus'] = config.gpus
+
+    if config.gpus > 1:
+        trainer_kwargs['accelerator'] = 'ddp'
+
     trainer_kwargs['callbacks'] = callbacks
     trainer_kwargs['max_epochs'] = config.max_epochs
 

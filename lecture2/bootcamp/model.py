@@ -74,7 +74,6 @@ class PlacesModel(pytorch_lightning.LightningModule):
     def training_step(self, batch, *_):
         loss, metrics = self._compute_loss(batch)
 
-        self.log('loss', loss, prog_bar=True)
         self.log('accuracy', metrics['accuracy_top1'], prog_bar=True)
 
         return loss
@@ -98,7 +97,7 @@ class PlacesModel(pytorch_lightning.LightningModule):
 
         lr_scheduler = torch.optim.lr_scheduler.OneCycleLR(
             opt,
-            max_lr=base_lr,
+            max_lr=base_lr * 10,
             epochs=self.hparams.max_epochs,
             steps_per_epoch=steps_per_epoch)
 
