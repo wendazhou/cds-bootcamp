@@ -29,6 +29,7 @@ class PlacesOptimConfig:
 class PlacesDataConfig:
     root: str = '/places365'
     dataset_size: Optional[int] = None
+    num_workers: int = 4
 
 
 @dataclasses.dataclass

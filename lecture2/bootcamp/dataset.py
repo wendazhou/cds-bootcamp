@@ -13,13 +13,14 @@ import torchvision.transforms
 
 
 class PlacesDataModule(pytorch_lightning.LightningDataModule):
-    def __init__(self, batch_size: int, root='/places365'):
+    def __init__(self, batch_size: int, root='/places365', num_data_workers: int=4):
         super().__init__()
 
         self.batch_size = batch_size
         self.root = root
         self.train_ds = None
         self.val_ds = None
+        self.num_data_workers = num_data_workers
 
 
     def setup(self, stage: Optional[str]=None) -> None:
@@ -51,7 +52,7 @@ class PlacesDataModule(pytorch_lightning.LightningDataModule):
             self.train_ds,
             batch_size=self.batch_size,
             shuffle=True,
-            num_workers=6,
+            num_workers=self.num_data_workers,
             persistent_workers=True)
 
     def val_dataloader(self):
@@ -59,4 +60,4 @@ class PlacesDataModule(pytorch_lightning.LightningDataModule):
             self.val_ds,
             batch_size=self.batch_size,
             shuffle=False,
-            num_workers=6)
+            num_workers=self.num_data_workers)

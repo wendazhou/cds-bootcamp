@@ -23,7 +23,11 @@ def main(config: model.PlacesTrainingConfig):
 
     trainer = pytorch_lightning.Trainer(**trainer_kwargs)
 
-    dm = dataset.PlacesDataModule(config.batch_size, config.data.root)
+    dm = dataset.PlacesDataModule(
+        config.batch_size // config.gpus,
+        config.data.root,
+        config.data.num_workers)
+
     dm.setup()
 
     config.data.dataset_size = len(dm.train_ds)
