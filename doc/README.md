@@ -5,6 +5,20 @@ Note that as this service offered by NYU is very new, the documentation is in fl
 Please ask questions on the brightspace forum if you encounter any issue.
 
 
+## Connecting to Greene
+
+To access the GCP bursting system, we first need to go through the main NYU HPC cluster Greene.
+NYU HPC provides instructions on how to access these systems [here](https://sites.google.com/a/nyu.edu/nyu-hpc/documentation/hpc-access).
+To ensure that the following workflows function smoothly, you should set up key-based (passwordless)
+authentication to Greene (note: you will still need to enter your password once for the gateway if you
+are not using a VPN).
+To set-up key-based authentication to Greene, simply use:
+```{bash}
+ssh-copy-id -i ~/.ssh/id_rsa greene
+```
+Assuming that you have set-up your `.ssh/config` file with the correct host aliases.
+
+
 ## Connecting to GCP bursting
 
 The GCP bursting system is controlled from the `burst` server, which must be accessed through the `greene.hpc.nyu.edu`
