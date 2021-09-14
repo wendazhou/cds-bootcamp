@@ -65,3 +65,13 @@ Singularity> ./scripts/run_sshd.sh
 Note that this script attempts to preserve several important environment variables in order to preserve
 all functionality including GPU functionality in the image. If running `nvidia-smi` on a new `ssh` shell
 fails inside the container, your environment variables were probably not preserved correctly.
+
+## Shutting down your `sshd` instance
+
+Note that due to the isolation rules of singularity the SSH daemon you started may outlive the container.
+This may prevent you from starting another SSH daemon if you launch a new instance of your container.
+In order to avoid this issue, you should kill the daemon process directly.
+
+First run `ps -u $USER` and look for `sshd` processes with high PIDs,
+these correspond to the processes started inside a container.
+You may stop them with `kill -9 PID` where PID is the value you observed from the previous command.
