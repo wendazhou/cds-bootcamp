@@ -34,7 +34,7 @@ We have access to four types of GCP instances, please choose them judiciously de
 
 These nodes should be allocated through SLURM, e.g.:
 ```{bash}
-srun --account=ds_ga_1006_001 --partition=n1c10m64-v100-1 --gres=gpu:v100:1 --time=8:00:00 --pty /bin/bash
+srun --account=ds_ga_1006_001 --partition=n1c10m64-v100-1 -c 10 --gres=gpu:v100:1 --time=8:00:00 --pty /bin/bash
 ```
 As these nodes are backed by virtual machines, they may take a little while (~1-2 minutes) to start up.
 Note that you should run this command through Tmux / Screen instance to avoid the machine being
@@ -57,3 +57,16 @@ it still presents sub-par random access performance.
 
 For best random access performance, there is a ramdisk mounted in `/mnt/ram`, which allows you to use
 the memory of the machine as a filesystem.
+
+## Troubleshooting connection to burstinstance
+
+A common error that you may encounter is that you are not able to connect to `burstinstance` from your laptop,
+even though you are able to connect to the instance from the `burst` server.
+If that is the case, the most likely cause is that the `~/.ssh/authorized_keys` file on the burst instance do
+not contain the key your are attempting to use from your laptop.
+You may check the authorized keys by opening the `~/.ssh/authorized_keys` file on the GCP instance in an editor
+(e.g. `nano` or `vim`).
+If you only see a single line (note that it may wrap), ending in a comment which looks like `wz2247@log-4.nyu.cluster`,
+only the key provided to you by NYU HPC on the cluster is present, and you will not be able to log in.
+To fix this, you can copy paste the content of your `~/.ssh/id_rsa.pub` file (on your laptop) into the `~/.ssh/authorized_keys`
+file (on the GCP instance) in a new line to save your key to the cluster.
