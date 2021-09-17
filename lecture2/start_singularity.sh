@@ -20,7 +20,7 @@ fi
 TMP_OVERLAY_SOURCE=overlay-0.5GB-200K.ext3
 
 # Set temporary directory in case it is not set
-TMPDIR=${$TMPDIR:-/tmp}
+TMPDIR=${TMPDIR:-/tmp}
 
 # This is the name of the temporary writable overlay to use. 
 # By default, it is defined as overlay-temp.ext3, but you may
