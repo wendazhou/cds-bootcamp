@@ -58,6 +58,35 @@ it still presents sub-par random access performance.
 For best random access performance, there is a ramdisk mounted in `/mnt/ram`, which allows you to use
 the memory of the machine as a filesystem.
 
+## Troubleshooting connection issues
+
+If you have trouble connecting using VScode, I suggest you go through the following set of troubleshooting steps.
+
+1. Connect to greene from your laptop. Can you connect to greene from your laptop terminal? (i.e. run `ssh greene`).
+   You should only face at most one single password prompt if your keys at set up correctly.
+2. Connect to `burst` from `greene`. Once you are connected to `greene`, are you able to subsequently connect to `burst`,
+   i.e. can you run (from `greene`) the command `ssh burst`?
+3. Connect to `burst` from your laptop. Are you able to connect directly to `burst` from your laptop terminal?
+   i.e. run `ssh greeneburst` if you have your `~/.ssh/config` set up on your laptop.
+4. Start a GCP instance from burst. When troubleshooting, I recommend you start an instance on the `interactive` partition
+   to avoid using up your quota needlessly.
+5. Connect to that new instance from `burst`. E.g. assuming that your instance is called `b-9-1`, can you, from `burst`,
+   successfully run `ssh b-9-1`?
+6. Connect from your laptop to the GCP instance. Make sure to edit your `~/.ssh/config` file to point to the instance,
+   and then run `ssh burstinstance` from your laptop.
+7. Build the overlay and start the container. Run the overlay scripts, start your container, and ensure that you can
+   see the `/places365` folder (i.e. try `ls /places365`).
+8. Start the SSH daemon in your container. Activate the `/ext3/conda/bootcamp` environment in the container,
+   run the `run_sshd` script.
+9. Connect from your laptop to the `burstinstancecontainer`. Run `ssh burstinstancecontainer` from your laptop,
+   and ensure that you are connected to the container by checking that you can see the `/places365` folder.
+10. Connect VSCode from your laptop.
+
+Common issues.
+- If you can run 1, but face two password prompts, or you can run 1-2 but not 3, then you probably need to ensure
+  your ssh keys are correctly set up on greene.
+- If you can run 1-5 but not 6, you probably need to ensure that your ssh keys are correctly set up on GCP
+
 ## Troubleshooting connection to burstinstance
 
 A common error that you may encounter is that you are not able to connect to `burstinstance` from your laptop,
