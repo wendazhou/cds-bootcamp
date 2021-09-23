@@ -7,20 +7,17 @@
 
 # Set this to the path of the singularity image you wish to use if different from default
 IMAGE=${IMAGE:-/scratch/wz2247/singularity/images/pytorch_21.06-py3.sif}
-# Set this to the directory containing your package overlays, by default we are using the directory
-# from lecture 2
-OVERLAY_DIR=${OVERLAY_DIR:-../lecture2}
 
 # Here, we manually set the maximum value for the number of open files
 ulimit -Sn $(ulimit -Hn)
 
 singularity exec --no-home -B $HOME/.ssh -B /scratch -B $PWD --nv \
     --cleanenv \
-    --overlay $OVERLAY_DIR/overlay-base.ext3:ro \
-    --overlay $OVERLAY_DIR/overlay-packages.ext3:ro \
+    --overlay overlay-base.ext3:ro \
+    --overlay overlay-packages.ext3:ro \
     $IMAGE /bin/bash << 'EOF'
 source ~/.bashrc
 conda activate /ext3/conda/bootcamp
-python -um torch_dataloader_ulimit
+python -um bootcamp.torch_dataloader_ulimit
 EOF
 

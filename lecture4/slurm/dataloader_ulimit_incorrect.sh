@@ -16,11 +16,11 @@ ulimit -Sn 1024
 
 singularity exec --no-home -B $HOME/.ssh -B /scratch -B $PWD --nv \
     --cleanenv \
-    --overlay $OVERLAY_DIR/overlay-base.ext3:ro \
-    --overlay $OVERLAY_DIR/overlay-packages.ext3:ro \
+    --overlay overlay-base.ext3:ro \
+    --overlay overlay-packages.ext3:ro \
     $IMAGE /bin/bash << 'EOF'
 source ~/.bashrc
 conda activate /ext3/conda/bootcamp
-python -um torch_dataloader_ulimit
+python -um bootcamp.torch_dataloader_ulimit
 EOF
 

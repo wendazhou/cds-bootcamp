@@ -34,10 +34,8 @@ conda activate /ext3/conda/bootcamp
 conda install -c conda-forge -y hydra-core omegaconf openssh optuna xgboost
 pip install pytorch-lightning
 
-cat << 'EOFBASHRC' >> ~/.bashrc
-if [[ -f ~/environment.sh ]]; then
-source ~/environment.sh
-fi
-EOFBASHRC
+cat << 'EOFBASHPROFILE' >> ~/.bash_profile
+source ~/.bashrc
+EOFBASHPROFILE
 
 EOF
