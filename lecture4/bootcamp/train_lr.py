@@ -125,9 +125,13 @@ def train_epoch(model: torch.nn.Module, optim: torch.optim.Optimizer, scaler: to
 
         # Note: for better performance, we are using 16-bit training,
         # so we are also using loss scaling here.
-        scaler.scale(loss).backward()
-        scaler.step(optim)
-        scaler.update()
+        if scaler is not None:
+            scaler.scale(loss).backward()
+            scaler.step(optim)
+            scaler.update()
+        else:
+            loss.backward()
+            optim.step()
 
         if scheduler is not None:
             # Step the scheduler.
