@@ -33,8 +33,10 @@ def main():
     total = 0
 
     for _ in tqdm.trange(50):
-        for ts in dataloader:
-            total += torch.stack(ts).sum()
+        for batch in dataloader:
+            # Imagine that you are training a network here...
+            # But we will just be summing the input :)
+            total += torch.stack(batch).sum()
 
     print(f'Total value this time was: {total}')
 
