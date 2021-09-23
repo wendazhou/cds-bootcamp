@@ -4,3 +4,5 @@ outputs/
 *.ext3
 *.ext3.gz
 *.nfs*
+data/
+multirun/
