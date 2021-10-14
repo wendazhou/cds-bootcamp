@@ -87,6 +87,12 @@ Common issues.
   your ssh keys are correctly set up on greene.
 - If you can run 1-5 but not 6, you probably need to ensure that your ssh keys are correctly set up on GCP
 
+## Troubleshooting VScode issues
+
+If you are having trouble with VSCode being able to connect, but it has worked in the past, try in order:
+  1. Delete the temporary overlay file (`overlay-temp.ext3`), restart your GCP instance, and try again.
+  2. If the above did not fix the issue, try deleting and re-creating all overlay files, and restarting your GCP instance.
+
 ## Troubleshooting connection to burstinstance
 
 A common error that you may encounter is that you are not able to connect to `burstinstance` from your laptop,
