@@ -1,6 +1,10 @@
 # This file is intended to be an example for you .ssh/config file
 # You will need to adjust the username to be your netid
 
+# Main gateway - needed to connect from outside NYU VPN
+#   We multiplex this connection particularly beacuse there
+#   is no passwordless authentication to the gateway.
+#   You have to enter your netid password every time.
 Host nyugateway
   User wz2247
   Hostname gw.hpc.nyu.edu
@@ -9,19 +13,23 @@ Host nyugateway
   ControlMaster auto
   ControlPersist yes
 
+# The main control node for Greene
 Host greene
   User wz2247
   Hostname greene.hpc.nyu.edu
   ForwardAgent yes
   ProxyJump nyugateway
 
+# The control node for GCP bursting
 Host greeneburst
   User wz2247
   Hostname burst
   ForwardAgent yes
   ProxyJump greene
 
-Host burstinstance
+# Your own instance that you have started on GCP
+# We also specify the same parameters for the container
+Host burstinstance burstinstancecontainer
   User wz2247
 # Change as needed
   Hostname b-3-1
@@ -30,11 +38,8 @@ Host burstinstance
   UserKnownHostsFile=/dev/null
   StrictHostKeyChecking=no
 
+# This is the configuration specific to the container
+# It runs an additional remote command
 Host burstinstancecontainer
-  User wz2247
-  Hostname localhost
-  Port 12345
-  ForwardAgent yes
-  ProxyJump burstinstance
-  UserKnownHostsFile=/dev/null
-  StrictHostKeyChecking=no
+  RemoteCommand singularity shell --shell='/bin/bash' instance://mycontainer
+  RequestTTY yes
