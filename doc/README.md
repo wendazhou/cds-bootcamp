@@ -34,7 +34,7 @@ We have access to four types of GCP instances, please choose them judiciously de
 
 These nodes should be allocated through SLURM, e.g.:
 ```{bash}
-srun --account=ds_ga_1006_001 --partition=n1c10m64-v100-1 -c 10 --gres=gpu:v100:1 --time=8:00:00 --pty /bin/bash
+srun --account=ds_ga_1006_001-2022fa --partition=n1c10m64-v100-1 -c 10 --gres=gpu:v100:1 --time=8:00:00 --pty /bin/bash
 ```
 As these nodes are backed by virtual machines, they may take a little while (~1-2 minutes) to start up.
 Note that you should run this command through Tmux / Screen instance to avoid the machine being
