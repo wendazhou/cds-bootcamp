@@ -63,7 +63,7 @@ fi
 # --overlay $DATA_DIRECTORY/places365.squashfs: overlay containing the places365 dataset
 
 
-singularity exec --no-home -B $HOME/.ssh -B /scratch -B $PWD --nv \
+singularity exec --containall -B $HOME/.ssh -B /scratch -B $PWD --nv \
     --cleanenv \
     --overlay $TMP_OVERLAY \
     --overlay overlay-base.ext3:ro \

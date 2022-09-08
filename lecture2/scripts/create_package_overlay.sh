@@ -25,10 +25,10 @@ mv $ADDITIONAL_PACKAGES_OVERLAY overlay-packages.ext3
 
 # We now execute the commands to install the packages that we need.
 echo "Installing additional packages"
-singularity exec --no-home -B $HOME/.ssh \
+singularity exec --containall -B $HOME/.ssh \
     --overlay overlay-packages.ext3 \
     --overlay overlay-base.ext3:ro \
-    $IMAGE_DIRECTORY/pytorch_21.06-py3.sif /bin/bash << 'EOF'
+    $IMAGE_DIRECTORY/pytorch_22.08-py3.sif /bin/bash << 'EOF'
 source ~/.bashrc
 conda activate /ext3/conda/bootcamp
 conda install -y pytest

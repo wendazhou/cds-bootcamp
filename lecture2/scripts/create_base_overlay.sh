@@ -37,9 +37,9 @@ mv $BASE_PACKAGES_OVERLAY overlay-base.ext3
 # to make the directory appear, here we choose to bind $HOME/.ssh
 #
 echo "Cloning base packages into overlay"
-singularity exec --no-home -B $HOME/.ssh \
+singularity exec --containall --no-home --bind $HOME/.ssh \
     --overlay overlay-base.ext3 \
-    $IMAGE_DIRECTORY/pytorch_21.06-py3.sif /bin/bash << 'EOF'
+    $IMAGE_DIRECTORY/pytorch_22.08-py3.sif /bin/bash << 'EOF'
 conda create --prefix /ext3/conda/bootcamp --clone base
 conda init bash
 EOF
