@@ -71,4 +71,55 @@ However, they are also great when we wish to create a logically long running ins
 work inside a container.
 
 Singularity instances are managed through the `singularity instance` set of commands.
+In particular, you will encounter the following commands:
+- `singularity instance start`: starts a new instance with the given configuration.
+    It is here that you must specify all options for the container (e.g. bind paths,
+    overlays etc.), the image that you wish to run, and a name of your choice for
+    this container instance.
+- `singularity instance list`: lists the set of all container instances which are
+    currently running on your system.
+- `singularity instance stop`: stops the instance with the given name.
 
+Once your instance is running, you may refer other singularity commands to it.
+For example, to run a shell in your given instance, you may use:
+```{bash}
+singularity shell instance://myinstance
+```
+As you have already specified all options during the instance creation, there is
+no need to specify more options again when running commands using a singularity instance.
+
+## Connecting VSCode to a singularity instance
+
+To be able to access your environment in an ergonomic fashion, we would like VSCode
+to connect to the singularity image we are using to develop our software. This will
+enable features like auto-completion, tests, debugging etc. using the exact dependencies
+that our software expects.
+
+The first step will be to ensure that we can directly connect to a shell *inside* the
+container instance. Although one possibility is to run a SSH *server* inside the instance,
+this is somewhat complex and prone to errors. Instead, we will make use of the `RemoteCommand`
+option to drop our session directly the container.
+
+For example, suppose that we have a singularity instance called `myinstance` running
+on a a host with nickname `mycomputer`. We modify the `.ssh/config` file in the following fashion:
+```
+Host mycomputer mycomputerinstance
+    # Configuration from mycomputer here
+
+Host mycomputerinstance
+    RemoteCommand singularity instance shell --shell='/bin/bash' instance://myinstance
+    RequestTTY true
+```
+With everything setup correctly, running `ssh mycomputerinstance` should land us in a shell
+which is directly running inside the container.
+
+Finally, we need to let VSCode know to explicitly respect the `RemoteCommand` configuration.
+You need to set the following two options in your VSCode configuration:
+```
+{
+    remote.SSH.enableLocalServer: true,
+    remote.SSH.enableRemoteCommand: true
+}
+```
+With those in place, you should be able to select `mycomputerinstance` from the VSCode SSH remote
+targets list, and directly connect into your container!

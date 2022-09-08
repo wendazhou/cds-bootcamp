@@ -32,7 +32,7 @@ singularity exec --containall -B $HOME/.ssh \
 source ~/.bashrc
 conda activate /ext3/conda/bootcamp
 conda install -y pytest
-conda install -c conda-forge -y hydra-core omegaconf openssh
+conda install -c conda-forge -y hydra-core omegaconf
 pip install pytorch-lightning
 
 cat << 'EOFBASHPROFILE' >> ~/.bash_profile
