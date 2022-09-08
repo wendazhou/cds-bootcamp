@@ -19,6 +19,8 @@ Host greene
   Hostname greene.hpc.nyu.edu
   ForwardAgent yes
   ProxyJump nyugateway
+  UserKnownHostsFile=/dev/null
+  StrictHostKeyChecking=no
 
 # The control node for GCP bursting
 Host greeneburst
