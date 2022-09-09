@@ -64,6 +64,10 @@ srun --account=ds_ga_1006_001-2022fa --partition=interactive --time=2:00:00 --pt
 - In the same terminal, run `ssh-copy-id b-2-1`. This will upload the keys from the agent to the burst instance.
 - Check that you can now login from your laptop (`ssh burstinstance` after setting the configuration correctly).
 
+You only need to do this procedure once, after which your keys will be saved to the GCP filesystem.
+For the following times, you can simply change your `~/,ssh/config` and log in from your laptop after
+requesting the GCP instance.
+
 ## GCP Bursting Instance information
 
 The GCP bursting instances are equipped with access to the shared filesystem on GCP, which is persistent
