@@ -25,7 +25,7 @@ mv $ADDITIONAL_PACKAGES_OVERLAY overlay-packages.ext3
 
 # We now execute the commands to install the packages that we need.
 echo "Installing additional packages"
-singularity exec --containall -B $HOME/.ssh \
+singularity exec --containall --no-home -B $HOME/.ssh \
     --overlay overlay-packages.ext3 \
     --overlay overlay-base.ext3:ro \
     $IMAGE_DIRECTORY/pytorch_22.08-py3.sif /bin/bash << 'EOF'
@@ -34,9 +34,5 @@ conda activate /ext3/conda/bootcamp
 conda install -y pytest
 conda install -c conda-forge -y hydra-core omegaconf
 pip install pytorch-lightning
-
-cat << 'EOFBASHPROFILE' >> ~/.bash_profile
-source ~/.bashrc
-EOFBASHPROFILE
 
 EOF

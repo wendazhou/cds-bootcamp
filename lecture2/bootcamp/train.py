@@ -8,7 +8,7 @@ from . import model, dataset
 @hydra.main(config_name='conf', config_path=None)
 def main(config: model.PlacesTrainingConfig):
     callbacks = [
-        pytorch_lightning.callbacks.GPUStatsMonitor(),
+        pytorch_lightning.callbacks.DeviceStatsMonitor(),
         pytorch_lightning.callbacks.LearningRateMonitor(log_momentum=True),
     ]
 
@@ -17,18 +17,20 @@ def main(config: model.PlacesTrainingConfig):
     if config.optim.grad_clip_norm is not None:
         trainer_kwargs['gradient_clip_val'] = config.optim.grad_clip_norm
 
-    trainer_kwargs['gpus'] = config.gpus
-
-    if config.gpus > 1:
-        trainer_kwargs['accelerator'] = 'ddp'
+    if config.gpus > 0:
+        trainer_kwargs['accelerator'] = 'gpu'
+        trainer_kwargs['devices'] = config.gpus
+    else:
+        trainer_kwargs['accelerator'] = 'cpu'
 
     trainer_kwargs['callbacks'] = callbacks
     trainer_kwargs['max_epochs'] = config.max_epochs
+    trainer_kwargs['precision'] = config.precision
 
     trainer = pytorch_lightning.Trainer(**trainer_kwargs)
 
     dm = dataset.PlacesDataModule(
-        config.batch_size // config.gpus,
+        config.batch_size // max(config.gpus, 1),
         config.data.root,
         config.data.num_workers)
 

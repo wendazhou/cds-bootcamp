@@ -38,6 +38,7 @@ class PlacesTrainingConfig:
     model: PlacesModelConfig = PlacesModelConfig()
     optim: PlacesOptimConfig = PlacesOptimConfig()
     lightning: Dict[str, Any] = dataclasses.field(default_factory=dict)
+    precision: int = 32
     batch_size: int = 256
     max_epochs: int = 60
     gpus: int = 1

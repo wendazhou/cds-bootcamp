@@ -1,7 +1,7 @@
 #! /bin/bash
 
 
-# This script is a utility script to help start singularity with the expected binds and overlays.
+# This script is a utility script to help start singularity instance with the expected binds and overlays.
 # It is intended to be used in conjuction with the `scripts/create_base_overlay.sh` and `scripts/create_package_overlay.sh`
 # scripts which create the required overlays.
 
@@ -20,6 +20,29 @@ DATA_DIRECTORY=${DATA_DIRECTORY:-/scratch/wz2247/data/}
 
 IMAGE=${IMAGE:-/scratch/wz2247/singularity/images/pytorch_22.08-py3.sif}
 
+INSTANCE_NAME=${INSTANCE_NAME:-mycontainer}
+
+# Set temporary directory in case it is not set
+TMPDIR=${TMPDIR:-/tmp}
+
+# This is the name of the temporary writable overlay to use. 
+# By default, it is defined as overlay-temp.ext3, but you may
+# re-define it to some other value by setting an environment variable
+# before calling this script.
+TMP_OVERLAY=${TMP_OVERLAY:-overlay-temp.ext3}
+
+
+# First, check that the temp overlay exists. Otherwise grap it from the overlays.
+
+if [[ ! -f $TMP_OVERLAY ]]; then
+
+echo "Temporary overlay not found, automatically creating a new one."
+cp "$OVERLAY_DIRECTORY/$TMP_OVERLAY_SOURCE.gz" "$TMPDIR"
+gunzip "$TMPDIR/$TMP_OVERLAY_SOURCE.gz"
+mv "$TMPDIR/$TMP_OVERLAY_SOURCE" "$TMP_OVERLAY"
+
+fi
+
 
 # This script starts singularity with all the expected binds in place.
 # The following binds / overlays are defined
@@ -33,11 +56,10 @@ IMAGE=${IMAGE:-/scratch/wz2247/singularity/images/pytorch_22.08-py3.sif}
 # --overlay overlay-packages.ext3: overlay with our installed packages, created by scripts/create_package_overlay.sh
 # --overlay $DATA_DIRECTORY/places365.squashfs: overlay containing the places365 dataset
 
-singularity exec --containall --no-home -B $HOME/.ssh -B /scratch -B $PWD --nv \
+singularity instance start --containall --no-home -B $HOME/.ssh -B /scratch -B $PWD --nv \
+    --overlay overlay-temp.ext3 \
     --overlay overlay-base.ext3:ro \
     --overlay overlay-packages.ext3:ro \
     --overlay $DATA_DIRECTORY/places365.squashfs:ro \
-    --writable-tmpfs \
-    --pwd $PWD \
-    $IMAGE /bin/bash
+    $IMAGE ${INSTANCE_NAME}
     
