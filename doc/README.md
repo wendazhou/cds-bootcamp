@@ -63,7 +63,8 @@ the memory of the machine as a filesystem.
 If you have trouble connecting using VScode, I suggest you go through the following set of troubleshooting steps.
 
 1. Connect to greene from your laptop. Can you connect to greene from your laptop terminal? (i.e. run `ssh greene`).
-   You should only face at most one single password prompt if your keys at set up correctly.
+   You should only face at most one single password prompt if your keys at set up correctly. To add your keys to `greene`,
+   run `ssh-copy-id greene`.
 2. Connect to `burst` from `greene`. Once you are connected to `greene`, are you able to subsequently connect to `burst`,
    i.e. can you run (from `greene`) the command `ssh burst`?
 3. Connect to `burst` from your laptop. Are you able to connect directly to `burst` from your laptop terminal?
@@ -71,7 +72,7 @@ If you have trouble connecting using VScode, I suggest you go through the follow
 4. Start a GCP instance from burst. When troubleshooting, I recommend you start an instance on the `interactive` partition
    to avoid using up your quota needlessly.
 5. Connect to that new instance from `burst`. E.g. assuming that your instance is called `b-9-1`, can you, from `burst`,
-   successfully run `ssh b-9-1`?
+   successfully run `ssh b-9-1`? You can check your instance name by running `squeue -u $USER` on the `burst` server.
 6. Connect from your laptop to the GCP instance. Make sure to edit your `~/.ssh/config` file to point to the instance,
    and then run `ssh burstinstance` from your laptop.
 7. Build the overlay and start the container. Run the overlay scripts, start your container, and ensure that you can
