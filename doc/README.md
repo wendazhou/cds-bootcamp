@@ -45,6 +45,24 @@ E.g. if the node is called `b-3-1`, simply run `ssh b-3-1` from the `burst` serv
 To connect from your laptop, it is easiest to setup appropriate aliases in your `~/.ssh/config` file.
 An example such file is provided ass [ssh_config](../lecture2/examples/ssh_config).
 
+## Setting up SSH access to the GCP bursting instances
+
+As the GCP bursting instances have a different filesystem, they do not automatically inherit the keys that you have
+uploaded to `greene`. Instead, you will need to upload your public keys again in order to be able to directly
+log into these machines.
+
+To do so, we will run the `ssh-copy-id` command from the `burst` server.
+- Log on to the `burst` server, and request a new GCP machine.
+```
+srun --account=ds_ga_1006_001-2022fa --partition=interactive --time=2:00:00 --pty /bin/bash
+```
+- In a new terminal, log on to the `burst` server again (`ssh greeneburst` from your laptop), and 1) check what is the name of the machine
+  you have been given (`squeue -u $USER`), and check that you can `ssh` from `burst` to that machine (let's say you were given `b-2-1`,
+  then you would run `ssh b-2-1`).
+- In the same terminal, check that your `ssh` agent forwarding is set up correctly. You can run `ssh-add -l` to list the keys available
+  to your agent. You should see a key with a path from your laptop.
+- In the same terminal, run `ssh-copy-id b-2-1`. This will upload the keys from the agent to the burst instance.
+- Check that you can now login from your laptop (`ssh burstinstance` after setting the configuration correctly).
 
 ## GCP Bursting Instance information
 
