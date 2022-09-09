@@ -51,22 +51,18 @@ As the GCP bursting instances have a different filesystem, they do not automatic
 uploaded to `greene`. Instead, you will need to upload your public keys again in order to be able to directly
 log into these machines.
 
-To do so, we will run the `ssh-copy-id` command from the `burst` server.
-- Log on to the `burst` server, and request a new GCP machine.
-```
-srun --account=ds_ga_1006_001-2022fa --partition=interactive --time=2:00:00 --pty /bin/bash
-```
-- In a new terminal, log on to the `burst` server again (`ssh greeneburst` from your laptop), and 1) check what is the name of the machine
-  you have been given (`squeue -u $USER`), and check that you can `ssh` from `burst` to that machine (let's say you were given `b-2-1`,
-  then you would run `ssh b-2-1`).
-- In the same terminal, check that your `ssh` agent forwarding is set up correctly. You can run `ssh-add -l` to list the keys available
-  to your agent. You should see a key with a path from your laptop.
-- In the same terminal, run `ssh-copy-id b-2-1`. This will upload the keys from the agent to the burst instance.
-- Check that you can now login from your laptop (`ssh burstinstance` after setting the configuration correctly).
+Unfortunately, as the GCP machines do not provide password access, we cannot use `ssh-copy-id`.
+Instead, we will manually place our key into `~/.ssh/authorized_keys`.
+- Start a new GCP instance from the burst server using `srun`. You will get access to a shell on
+  the GCP instance. Then either:
+- Option 1 (if you have already set up access to `greene`). Run `scp greene-dtn:.ssh/authorized_keys .ssh/`
+  which will copy your `authorized_keys` from `greene` into the GCP machines, then run `chmod 600 .ssh/authorized_keys`
+  to ensure that permissions are set correctly.
+- Option 2 (writing the keys manually). Copy the content of `~/.ssh/id_rsa.pub` from your laptop into
+  a new line of the file `~/.ssh/authorized_keys` in the GCP instance.
 
-You only need to do this procedure once, after which your keys will be saved to the GCP filesystem.
-For the following times, you can simply change your `~/,ssh/config` and log in from your laptop after
-requesting the GCP instance.
+You should subsequently be able to log in using `ssh` to the instances directly (after editing your
+`~/.ssh/config` file). There should be no need to do this procedure again.
 
 ## GCP Bursting Instance information
 
