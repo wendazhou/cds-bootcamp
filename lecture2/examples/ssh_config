@@ -43,5 +43,5 @@ Host burstinstance burstinstancecontainer
 # This is the configuration specific to the container
 # It runs an additional remote command
 Host burstinstancecontainer
-  RemoteCommand singularity shell --shell='/bin/bash' instance://mycontainer
+  RemoteCommand singularity shell --containall --shell='/bin/bash' instance://mycontainer
   RequestTTY yes
