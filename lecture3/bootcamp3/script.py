@@ -26,7 +26,7 @@ class TrainingConfig:
     data_path: str = 'data.npy'
 
 
-@hydra.main(config_path=None, config_name='config')
+@hydra.main(version_base="1.1", config_path=None, config_name='config')
 def main(config: TrainingConfig):
     print(f'Got configuration: {config}')
 
