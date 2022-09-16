@@ -24,9 +24,11 @@ class TrainingConfig:
     model: ModelConfig = ModelConfig()
     num_epochs: int = 10
     data_path: str = 'data.npy'
+    num_gpus: int = 1
+    batch_size: int = 256
 
 
-@hydra.main(version_base="1.1", config_path=None, config_name='config')
+@hydra.main(version_base="1.1", config_path='conf', config_name='config')
 def main(config: TrainingConfig):
     print(f'Got configuration: {config}')
 

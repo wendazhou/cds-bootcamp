@@ -1,0 +1,4 @@
+architecture: lenet
+hidden_size: 20
+block_sizes: [10, 20, 10]
+

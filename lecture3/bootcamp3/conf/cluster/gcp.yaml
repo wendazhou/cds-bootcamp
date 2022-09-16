@@ -1,0 +1,4 @@
+# @package _global_
+
+num_gpus: 1
+batch_size: 256
