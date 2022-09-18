@@ -30,7 +30,15 @@ TMPDIR=${TMPDIR:-/tmp}
 # re-define it to some other value by setting an environment variable
 # before calling this script.
 TMP_OVERLAY=${TMP_OVERLAY:-overlay-temp.ext3}
+TMP_OVERLAY_SOURCE=${TMP_OVERLAY_SOURCE:-overlay-5GB-3.2M.ext3}
 
+
+# Set this to the directory containing empty overlay images
+# Note: on GCP the overlay directory does not exist
+OVERLAY_DIRECTORY=/scratch/work/public/overlay-fs-ext3/
+if [[ ! -d $OVERLAY_DIRECTORY ]]; then
+OVERLAY_DIRECTORY=/scratch/wz2247/singularity/overlays/
+fi
 
 # First, check that the temp overlay exists. Otherwise grap it from the overlays.
 
