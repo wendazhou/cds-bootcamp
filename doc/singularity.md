@@ -107,7 +107,7 @@ Host mycomputer mycomputerinstance
     # Configuration from mycomputer here
 
 Host mycomputerinstance
-    RemoteCommand singularity instance shell --shell='/bin/bash' instance://myinstance
+    RemoteCommand singularity shell --containall --shell='/bin/bash' instance://myinstance
     RequestTTY true
 ```
 With everything setup correctly, running `ssh mycomputerinstance` should land us in a shell
