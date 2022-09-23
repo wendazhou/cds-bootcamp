@@ -202,7 +202,7 @@ def train(config: Config):
 
     start_time = time.perf_counter()
 
-    for _ in tqdm.trange(50):
+    for _ in tqdm.trange(config.max_epochs):
         epoch_loss = train_epoch(model, optim, scaler, dataloader, scheduler=scheduler)
 
     end_time = time.perf_counter()
@@ -211,6 +211,8 @@ def train(config: Config):
     print(f'Final train loss: {np.mean(epoch_loss)}')
     print(f'Final loss {final_loss:.3f}, final accuracy {final_accuracy:.2%}.')
     print(f'Total time: {end_time - start_time:.1f} s.')
+    total_images = dataloader.dataset_size * config.max_epochs
+    print(f'Training speed: {total_images / (end_time - start_time):.1f} img / s.')
 
 
 @hydra.main(config_name='config', config_path=None)
