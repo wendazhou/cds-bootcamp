@@ -39,5 +39,5 @@ singularity exec --containall --no-home -B $HOME/.ssh -B /scratch -B $PWD --nv \
     --overlay $DATA_DIRECTORY/places365.squashfs:ro \
     --writable-tmpfs \
     --pwd $PWD \
-    $IMAGE /bin/bash
+    $IMAGE "$@"
     
