@@ -18,6 +18,7 @@ set -e
 # Inside the container, we mount the standard location for the hub cache
 # ~/.cache/huggingface/hub to this location
 HF_HOME=${HF_HOME:-/scratch/$USER/cache/huggingface/}
+mkdir -p $HF_HOME
 
 
 IMAGE=${IMAGE:-/scratch/wz2247/singularity/images/pytorch_22.08-py3.sif}
