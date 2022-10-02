@@ -117,7 +117,7 @@ Finally, we need to let VSCode know to explicitly respect the `RemoteCommand` co
 You need to set the following two options in your VSCode configuration:
 ```
 {
-    remote.SSH.enableLocalServer: true,
+    remote.SSH.useLocalServer: true,
     remote.SSH.enableRemoteCommand: true
 }
 ```
